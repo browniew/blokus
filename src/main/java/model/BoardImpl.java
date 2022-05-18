@@ -8,10 +8,12 @@ public class BoardImpl {
     private int width;
     private int[][] board;
     private List<CellImpl> piece = new ArrayList<CellImpl>();
+    private int isConnected;
 
     public BoardImpl() {
         height = 20;
         width = 20;
+        isConnected = 0;
         board = new int[height][width];
     }
 
@@ -92,6 +94,9 @@ public class BoardImpl {
                     if (piece.get(i).getCellHeight() == height) {
                         if(piece.get(i).getCellWidth() == width) {
                             piece.remove(i);
+                            if(checkCorner(height, width, color)) {
+                                isConnected--;
+                            }
                             return;
                         }
                     }
@@ -105,8 +110,60 @@ public class BoardImpl {
             board[height][width] = color;
             CellImpl cell = new CellImpl(height, width);
             piece.add(cell);
+            if(checkCorner(height, width, color)) {
+                isConnected++;
+            }
         }
         return;
+    }
+
+    public boolean checkCorner(int height, int width, int color) {
+        if(height == 0 && width == 0) {
+            if(hasColor(height + 1, width + 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == this.height - 1 && width == this.width - 1) {
+            if(hasColor(height - 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == 0 && width == this.width - 1) {
+            if(hasColor(height + 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == this.height - 1 && width == 0) {
+            if(hasColor(height - 1, width + 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == 0) {
+            if(hasColor(height + 1, width + 1, color - 4) || hasColor(height + 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(width == 0) {
+            if(hasColor(height + 1, width + 1, color - 4) || hasColor(height - 1, width + 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == this.height - 1) {
+            if(hasColor(height - 1, width + 1, color - 4) || hasColor(height - 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        else if(height == this.width - 1) {
+            if(hasColor(height - 1, width - 1, color - 4) || hasColor(height + 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        else {
+            if(hasColor(height + 1, width + 1, color - 4) || hasColor(height - 1, width + 1, color - 4) || hasColor(height - 1, width - 1, color - 4) || hasColor(height + 1, width - 1, color - 4)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void changeColors() {
@@ -767,6 +824,175 @@ public class BoardImpl {
                     else if(cell3.getCellHeight() - 1 == cell2.getCellHeight() && cell3.getCellWidth() + 2 == cell2.getCellWidth()) {
                         if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
                             if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(no == 18) {
+            if(ordered.size() == 5) {
+                CellImpl cell1 = ordered.get(0);
+                CellImpl cell2 = ordered.get(1);
+                CellImpl cell3 = ordered.get(2);
+                CellImpl cell4 = ordered.get(3);
+                CellImpl cell5 = ordered.get(4);
+                if(cell2.getCellHeight() == cell1.getCellHeight() && cell2.getCellWidth() - 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() - 1 == cell2.getCellHeight() && cell3.getCellWidth() == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell4.getCellHeight() && cell5.getCellWidth() == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                    else if(cell3.getCellHeight() - 1 == cell1.getCellHeight() && cell3.getCellWidth() + 1 == cell1.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell3.getCellHeight() && cell5.getCellWidth() == cell3.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() - 1 == cell3.getCellHeight() && cell4.getCellWidth() == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() + 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() - 1 == cell2.getCellHeight() && cell4.getCellWidth() + 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(no == 19) {
+            if(ordered.size() == 5) {
+                CellImpl cell1 = ordered.get(0);
+                CellImpl cell2 = ordered.get(1);
+                CellImpl cell3 = ordered.get(2);
+                CellImpl cell4 = ordered.get(3);
+                CellImpl cell5 = ordered.get(4);
+                if(cell2.getCellHeight() == cell1.getCellHeight() && cell2.getCellWidth() - 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() - 1 == cell2.getCellHeight() && cell3.getCellWidth() == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() - 1 == cell3.getCellHeight() && cell4.getCellWidth() == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                    else if(cell3.getCellHeight() - 1 == cell1.getCellHeight() && cell3.getCellWidth() == cell1.getCellWidth()) {
+                        if(cell4.getCellHeight() - 1 == cell3.getCellHeight() && cell4.getCellWidth() + 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell4.getCellHeight() && cell5.getCellWidth() == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() + 2 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell2.getCellHeight() && cell5.getCellWidth() == cell2.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(no == 20) {
+            if(ordered.size() == 5) {
+                CellImpl cell1 = ordered.get(0);
+                CellImpl cell2 = ordered.get(1);
+                CellImpl cell3 = ordered.get(2);
+                CellImpl cell4 = ordered.get(3);
+                CellImpl cell5 = ordered.get(4);
+                if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell3.getCellHeight() && cell5.getCellWidth() == cell3.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                        else if(cell4.getCellHeight() - 1 == cell2.getCellHeight() && cell4.getCellWidth() + 1 == cell2.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() + 2 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell3.getCellHeight() && cell5.getCellWidth() == cell3.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() + 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell2.getCellHeight() && cell5.getCellWidth() == cell2.getCellWidth()) {
+                                return true;
+                            }
+                            else if(cell5.getCellHeight() - 1 == cell4.getCellHeight() && cell5.getCellWidth() == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                        else if(cell4.getCellHeight() - 1 == cell3.getCellHeight() && cell4.getCellWidth() == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() == cell4.getCellHeight() && cell5.getCellWidth() - 1 == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(cell2.getCellHeight() == cell1.getCellHeight() && cell2.getCellWidth() - 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() - 1 == cell2.getCellHeight() && cell3.getCellWidth() == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell3.getCellHeight() && cell5.getCellWidth() == cell3.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                    else if(cell3.getCellHeight() - 1 == cell1.getCellHeight() && cell3.getCellWidth() + 1 == cell1.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell4.getCellHeight() && cell5.getCellWidth() == cell4.getCellWidth()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(no == 21) {
+            if(ordered.size() == 5) {
+                CellImpl cell1 = ordered.get(0);
+                CellImpl cell2 = ordered.get(1);
+                CellImpl cell3 = ordered.get(2);
+                CellImpl cell4 = ordered.get(3);
+                CellImpl cell5 = ordered.get(4);
+                if(cell2.getCellHeight() - 1 == cell1.getCellHeight() && cell2.getCellWidth() + 1 == cell1.getCellWidth()) {
+                    if(cell3.getCellHeight() == cell2.getCellHeight() && cell3.getCellWidth() - 1 == cell2.getCellWidth()) {
+                        if(cell4.getCellHeight() == cell3.getCellHeight() && cell4.getCellWidth() - 1 == cell3.getCellWidth()) {
+                            if(cell5.getCellHeight() - 1 == cell3.getCellHeight() && cell5.getCellWidth() == cell3.getCellWidth()) {
                                 return true;
                             }
                         }
